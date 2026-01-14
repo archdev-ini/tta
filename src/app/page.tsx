@@ -6,7 +6,7 @@ export default async function Home() {
   
   return (
     <HomeClient 
-      marqueeText={settings?.marqueeText || "THE THINKING ARCHITECT // MASTERCLASS // <CurrentYear /> // JOIN THE COMMUNITY"} 
+      marqueeText={settings?.marqueeText || "THE THINKING ARCHITECT // MASTERCLASS // 2026 // JOIN THE COMMUNITY"} 
     />
   );
 }

@@ -29,7 +29,7 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      <div className="max-w-[1600px] mx-auto pt-32 pb-20 px-6 relative z-10">
+      <div className="max-w-[1600px] mx-auto pt-20 lg:pt-32 pb-20 px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
           <div className="md:col-span-2">
             <h2 className="text-6xl font-black tracking-tighter mb-8 leading-none">
@@ -47,10 +47,10 @@ export default function Footer() {
               <h3 className="text-[11px] font-black uppercase tracking-widest text-foreground/50">Navigation</h3>
               <ul className="flex flex-col gap-2">
                 <FooterLink href="/programs">Programs</FooterLink>
+                <FooterLink href="/sessions">Sessions</FooterLink>
                 <FooterLink href="/media">Media</FooterLink>
                 <FooterLink href="/about">About</FooterLink>
-                <FooterLink href="/events">Sessions</FooterLink>
-                <FooterLink href="https://t.me/thethinkingarchitect">Tickets</FooterLink>
+                <FooterLink href="/tickets">Tickets</FooterLink>
               </ul>
             </div>
             <div className="flex flex-col gap-4">
@@ -74,14 +74,14 @@ export default function Footer() {
 
         <div className="mt-40 border-t border-foreground/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
            <div className="flex flex-col gap-1 items-center md:items-start text-[10px] font-black uppercase tracking-widest text-foreground/40">
-              <span>Established January {new Date().getFullYear()}</span>
+              <span>Established January 2026</span>
               <div className="flex items-center gap-2">
                 <Globe size={14} /> Global Foundation
               </div>
            </div>
            <div className="text-center md:text-right">
               <p className="text-[10px] font-black uppercase tracking-widest text-foreground/60">
-                © {new Date().getFullYear()} The Thinking Architect. All rights reserved.
+                © 2026 The Thinking Architect. All rights reserved.
               </p>
            </div>
         </div>

@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/animation/SmoothScroll";
 import PageTransition from "@/components/animation/PageTransition";
 import CommandPalette from "@/components/ui/CommandPalette";
 import Preloader from "@/components/ui/Preloader";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -61,6 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${museoModerno.variable} antialiased`}
       >

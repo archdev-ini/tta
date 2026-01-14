@@ -6,6 +6,7 @@ import Link from "next/link";
 import GlitchText from "@/components/ui/GlitchText";
 import Marquee from "@/components/ui/Marquee";
 import { Asterisk, WavePattern, DottedLine } from "@/components/ui/DecorativeGraphics";
+import JoinCommunityButton from "@/components/ui/JoinCommunityButton";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -67,16 +68,22 @@ export default function HomeClient({ marqueeText }: { marqueeText: string }) {
             <GlitchText 
               as="h1" 
               text="THE THINKING ARCHITECT" 
-              className="text-6xl md:text-[10rem] font-black leading-[0.85] mb-8 tracking-tighter text-foreground"
+              className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.85] mb-8 tracking-tighter text-foreground"
             />
           </motion.div>
           
           <motion.p 
             variants={itemVariants}
-            className="text-xl md:text-2xl text-foreground/60 max-w-2xl mb-12 font-medium tracking-tight"
+            className="text-xl md:text-2xl text-foreground/60 max-w-2xl mb-6 font-medium tracking-tight"
           >
-            An architectural foundation for master-level practitioners. <br />
-            Depth, intentionality, and professional durability in architectural practice.
+            Talks, sessions, and programs for architects building clarity beyond school and durability in practice.
+          </motion.p>
+
+          <motion.p 
+            variants={itemVariants}
+            className="text-lg text-foreground/50 max-w-2xl mb-12"
+          >
+            A global platform hosting architectural conversations, learning sessions, and long-term programs for architects navigating education, practice, and professional identity.
           </motion.p>
           
           <motion.div 
@@ -124,7 +131,7 @@ export default function HomeClient({ marqueeText }: { marqueeText: string }) {
       </motion.div>
 
       {/* Focus Area Grid */}
-      <section className="max-w-[1600px] mx-auto w-full px-6 py-40 border-x border-foreground/5">
+      <section className="max-w-[1600px] mx-auto w-full px-6 py-20 lg:py-40 border-x border-foreground/5">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -135,40 +142,40 @@ export default function HomeClient({ marqueeText }: { marqueeText: string }) {
           <FocusCard 
             number="01"
             title="Strategic Discourse"
-            description="Intellectual rigor applied to the structural realities of professional architectural practice."
+            description="Live and recorded architectural talks that interrogate real practice — systems, decisions, mistakes, and long-term thinking beyond theory."
           />
           <FocusCard 
             number="02"
             title="Foundational Logic"
-            description="Mastery of the principles that produce durable architectural thinking across time and context."
+            description="Sessions and programs focused on the principles that shape strong architectural judgment, clear design thinking, and professional consistency."
           />
           <FocusCard 
             number="03"
             title="Operational Agility"
-            description={`Navigating the professional landscape of ${currentYear} with clarity, systems, and technical precision.`}
+            description="Practical conversations and learning experiences addressing how architects work in today’s landscape — from workflow and systems to adaptability in 2026 and beyond."
             highlight
           />
           <FocusCard 
             number="04"
             title="Community Hub"
-            description="Access to our private Telegram channels for structured discussion, rapid feedback, and shared learning."
+            description="A private, structured Telegram community for architects and students to ask questions, share insights, and learn directly from ongoing TTA sessions and programs."
           />
           <FocusCard 
             number="05"
             title="Media Repository"
-            description="A curated archive of talks, sessions, and long-form conversations drawn from TTA’s YouTube platform."
+            description="A growing archive of TTA talks, interviews, and long-form conversations available through our media platforms, including YouTube."
           />
           <FocusCard 
             border={false}
             number="06"
             title="Event Scale"
-            description="Live and virtual architectural sessions powered by full Luma calendar integration."
+            description="Live and virtual architectural sessions — from focused masterclasses to open conversations — scheduled and managed through our integrated event calendar."
           />
         </motion.div>
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-60 flex flex-col items-center justify-center text-center bg-dot-pattern border-y border-foreground/5 relative overflow-hidden">
+      <section className="py-20 lg:py-40 flex flex-col items-center justify-center text-center bg-dot-pattern border-y border-foreground/5 relative overflow-hidden">
          {/* Decorative Graphics */}
          <div className="absolute top-10 right-10 opacity-10 hidden lg:block">
             <Asterisk color="var(--accent)" className="w-64 h-64" />
@@ -185,14 +192,12 @@ export default function HomeClient({ marqueeText }: { marqueeText: string }) {
            className="max-w-4xl px-6 relative z-10"
          >
             <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 uppercase leading-none text-foreground">
-               READY TO UPGRADE YOUR <span className="text-accent underline decoration-4 underline-offset-8">FOUNDATION?</span>
+               READY TO BUILD YOUR <span className="text-accent underline decoration-4 underline-offset-8">ARCHITECTURAL FOUNDATION?</span>
             </h2>
             <p className="text-xl text-foreground/60 mb-12 max-w-2xl mx-auto font-medium">
-               Join the TTA community and engage architectural thinking at a deeper level.
+               Join The Thinking Architect and take part in talks, sessions, and programs designed to help you think clearly, practice intentionally, and grow with direction.
             </p>
-            <Link href="https://t.me/thethinkingarchitect" className="btn-primary text-2xl px-16 py-6 inline-flex group">
-               Join Community Now <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-            </Link>
+            <JoinCommunityButton />
          </motion.div>
          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
             <motion.div 
@@ -211,7 +216,7 @@ function FocusCard({ number, title, description, border = true, highlight = fals
     <motion.div 
       variants={itemVariants}
       whileHover={{ backgroundColor: "rgba(232, 93, 63, 0.03)" }}
-      className={`p-16 flex flex-col gap-10 transition-colors group ${border ? 'border-b lg:border-r border-foreground/5' : ''} ${highlight ? 'bg-accent/5' : ''}`}
+      className={`p-8 md:p-12 lg:p-16 flex flex-col gap-10 transition-colors group ${border ? 'border-b lg:border-r border-foreground/5' : ''} ${highlight ? 'bg-accent/5' : ''}`}
     >
        <div className="flex justify-between items-start">
          <span className="text-4xl font-black text-foreground/10 group-hover:text-accent transition-all leading-none">{number}</span>
