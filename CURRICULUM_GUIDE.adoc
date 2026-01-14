@@ -1,0 +1,82 @@
+= TTA Curriculum Management Guide
+:toc:
+:icons: font
+
+This guide provides technical instructions for adding or updating programs on the TTA platform using the MDX content engine.
+
+== 1. File Location
+All program content is stored in the content repository:
+`src/content/programs/`
+
+== 2. Creating a New Program
+To add a new program, create a `.mdx` file in the directory mentioned above. The filename will become the URL slug (e.g., `quantum-architectics.mdx` becomes `/programs/quantum-architectics`).
+
+== 3. Frontmatter Configuration
+Every file MUST start with a YAML frontmatter block. This data controls the logic of the listing page and transitions.
+
+[source,yaml]
+----
+---
+title: "PROGRAM TITLE"
+label: "Program / [Status]"
+status: "Upcoming" | "Ongoing"
+featured: true | false
+description: "A short professional summary for the index card."
+---
+----
+
+=== Field Definitions
+* `title`: The main heading (e.g., "LOCKEDIN // 2026").
+* `label`: Secondary institutional tag (displayed in small caps).
+* `status`: Current state (e.g., "Open Enrollment").
+* `featured`: If `true`, the card gets a 5% Coral background tint and a lock icon.
+* `description`: The copy that appears on the `/programs` listing page.
+
+== 4. Component Library
+You can use the following custom TTA components directly inside your markdown:
+
+=== ModuleBadge
+Creates the standard 4-column module grid.
+[source,mdx]
+----
+<div className="max-w-[1600px] w-full border-x border-t border-foreground/5 py-40 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-dot-pattern">
+   <ModuleBadge title="Phase 01" label="Conceptual Logic" />
+   <ModuleBadge title="Phase 02" label="Technical Build" />
+   <ModuleBadge title="Phase 03" label="Operational Delivery" />
+   <ModuleBadge border={false} title="Phase 04" label="Absolute Mastery" />
+</div>
+----
+
+=== Link
+Use for internal or external navigation.
+[source,mdx]
+----
+<Link href="/contact" className="btn-outline">Inquire Now</Link>
+----
+
+== 5. Layout Structure
+A typical program page should follow this institutional sequence:
+1. **Frontmatter**: (Required at top)
+2. **Hero Segment**: Managed automatically by the framework.
+3. **Operational Section**: A two-column grid (`grid-cols-1 lg:grid-cols-2`) for "Update" and "Parameters".
+4. **Module Segment**: Using the `ModuleBadge` grid.
+
+== 6. Deployment
+Once the `.mdx` file is saved, the platform will:
+1. Automatically add it to the `/programs` listing.
+2. Generate the dynamic route at `/programs/[slug]`.
+3. Validate the institutional design during the next build cycle.
+
+== 7. Global Settings (Marquee & Sitewide Text)
+To edit sitewide strings like the Home Page Marquee, modify the following file:
+`src/content/settings/globals.mdx`
+
+[source,yaml]
+----
+---
+marqueeText: "THE THINKING ARCHITECT // MASTERCLASS // <CurrentYear /> // JOIN THE COMMUNITY"
+---
+----
+
+=== Dynamic Tags
+* `<CurrentYear />`: Automatically replaced with the current dynamic year across the platform.

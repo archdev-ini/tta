@@ -1,0 +1,52 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+
+const pixelMap: Record<string, string> = {
+  A: "A", // I could replace these with SVG fragments for a more "pixelated" look
+  E: "E",
+  H: "H",
+  N: "N",
+  M: "M",
+  T: "T",
+};
+
+interface GlitchTextProps {
+  text: string;
+  className?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "span" | "div";
+}
+
+export default function GlitchText({ text, className = "", as: Component = "span" }: GlitchTextProps) {
+  const [displayText, setDisplayText] = useState(text);
+
+  useEffect(() => {
+    const chars = text.split("");
+    const glitchInterval = setInterval(() => {
+      const glitched = chars.map((char) => {
+        if (Math.random() > 0.95) {
+          // Occasional random pixel-like char or symbol
+          const symbols = ["░", "▒", "▓", "█", "■", "□", "▢", "▣", "▤", "▥", "▦", "▧", "▨", "▩"];
+          return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+        return char;
+      });
+      setDisplayText(glitched.join(""));
+      
+      // Reset back to original text quickly
+      setTimeout(() => setDisplayText(text), 50);
+    }, 2000 + Math.random() * 3000);
+
+    return () => clearInterval(glitchInterval);
+  }, [text]);
+
+  return (
+    <Component className={`${className} inline-block font-heading`}>
+      {displayText.split("").map((char, i) => (
+        <span key={i} className={/[░▒▓█■□▢▣▤▥▦▧▨▩]/.test(char) ? "text-accent" : ""}>
+          {char}
+        </span>
+      ))}
+    </Component>
+  );
+}
