@@ -23,6 +23,7 @@ const itemVariants = {
 
 export default function MediaGrid({ videos }: { videos: Video[] }) {
   const [visibleCount, setVisibleCount] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
   
   if (!videos || videos.length === 0) {
     return (
@@ -36,11 +37,30 @@ export default function MediaGrid({ videos }: { videos: Video[] }) {
     );
   }
 
-  const visibleVideos = videos.slice(0, visibleCount);
-  const hasMore = visibleCount < videos.length;
+  const filteredVideos = videos.filter(v => 
+    v.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    v.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
+  const visibleVideos = filteredVideos.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredVideos.length;
 
   return (
-    <div className="flex flex-col gap-20 items-center w-full">
+    <div className="flex flex-col gap-12 items-center w-full">
+      {/* Search Interface */}
+      <div className="w-full max-w-xl mb-8 relative">
+        <input 
+            type="text" 
+            placeholder="SEARCH ARCHIVE [KEYWORDS, TOPICS]..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-background border border-foreground/10 px-6 py-4 text-sm font-bold uppercase tracking-widest focus:outline-none focus:border-accent transition-colors placeholder:text-foreground/20"
+        />
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-foreground/20 pointer-events-none">
+            {filteredVideos.length} RECORDS
+        </div>
+      </div>
+
       <motion.div 
         variants={containerVariants}
         initial="hidden"
@@ -63,6 +83,11 @@ export default function MediaGrid({ videos }: { videos: Video[] }) {
                  className="absolute inset-0 bg-cover bg-center opacity-10 grayscale group-hover:grayscale-0 transition-all duration-700"
                  style={{ backgroundImage: `url(${video.thumbnail})` }}
                />
+               {video.duration && (
+                <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-1 text-[10px] font-bold text-white uppercase tracking-wider border border-white/10">
+                    {video.duration}
+                </div>
+               )}
                <Play size={48} className="text-foreground opacity-40 group-hover:opacity-100 group-hover:text-accent group-hover:scale-110 transition-all relative z-10" />
             </div>
             <div className="mt-8 flex flex-col gap-2">
@@ -73,7 +98,21 @@ export default function MediaGrid({ videos }: { videos: Video[] }) {
                 {video.title}
               </h3>
               {video.date && (
-                  <span className="text-xs text-foreground/40 font-bold uppercase tracking-widest">{video.date}</span>
+                  <div className="flex items-center gap-3 mt-1 text-xs text-foreground/40 font-bold uppercase tracking-widest">
+                    <span>{video.date}</span>
+                    {video.views && (
+                        <>
+                            <span className="w-1 h-1 bg-accent/50 rounded-full" />
+                            <span className="text-foreground/60">{video.views} Views</span>
+                        </>
+                    )}
+                    {video.likes && (
+                       <>
+                            <span className="w-1 h-1 bg-accent/50 rounded-full" />
+                            <span className="text-foreground/60">{video.likes} Likes</span>
+                       </>
+                    )}
+                  </div>
               )}
             </div>
           </motion.div>

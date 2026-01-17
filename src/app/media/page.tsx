@@ -3,7 +3,7 @@ import MediaGrid from "@/components/media/MediaGrid";
 import MediaHeader from "@/components/media/MediaHeader";
 import MediaFooter from "@/components/media/MediaFooter";
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 0; // Disable caching for debugging
 
 export default async function Media() {
   const videos = await getLatestVideos();

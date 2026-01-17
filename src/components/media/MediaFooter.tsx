@@ -1,16 +1,13 @@
-"use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { Youtube } from "lucide-react";
+import { Youtube, Users, Eye, Video } from "lucide-react";
+import { getChannelStats } from "@/lib/youtube";
 
-export default function MediaFooter() {
+export default async function MediaFooter() {
+  const stats = await getChannelStats();
+
   return (
-    <motion.section 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+    <section 
       className="max-w-[1600px] w-full px-6 py-40 border-x border-t border-foreground/5 bg-dot-pattern flex items-center justify-center text-center relative overflow-hidden"
     >
        {/* Subtle Blue Accent */}
@@ -20,7 +17,28 @@ export default function MediaFooter() {
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-8 group leading-none text-foreground">
              FULL ARCHIVE <br /> ON <span className="text-accent">YOUTUBE</span>
           </h2>
-          <p className="text-foreground/40 mb-12 font-medium leading-relaxed">
+          
+          {stats && (
+            <div className="grid grid-cols-3 gap-8 md:gap-16 mb-12 w-full max-w-2xl border-y border-foreground/5 py-8">
+                <div className="flex flex-col items-center gap-2">
+                    <Users className="text-accent mb-2" size={24} />
+                    <span className="text-2xl md:text-3xl font-black">{stats.subscriberCount}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Subscribers</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 border-x border-foreground/5">
+                    <Eye className="text-accent mb-2" size={24} />
+                    <span className="text-2xl md:text-3xl font-black">{stats.viewCount}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Total Views</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                    <Video className="text-accent mb-2" size={24} />
+                    <span className="text-2xl md:text-3xl font-black">{stats.videoCount}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-foreground/40">Videos</span>
+                </div>
+            </div>
+          )}
+
+          <p className="text-foreground/40 mb-12 font-medium leading-relaxed max-w-xl">
              The TTA website acts as a high-speed gateway. For deep dives into our multi-hour playlist structures, visit our official channel.
           </p>
           <Link 
@@ -30,6 +48,6 @@ export default function MediaFooter() {
             Access Channel <Youtube size={20} className="text-accent group-hover:scale-125 transition-transform" />
           </Link>
        </div>
-    </motion.section>
+    </section>
   );
 }

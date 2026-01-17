@@ -14,13 +14,14 @@ async function testFetch() {
     console.log("XML Length:", xmlText.length);
     console.log("First 500 chars:", xmlText.substring(0, 500));
     
-    const entries = xmlText.match(/<entry>[\s\S]*?<\/entry>/g) || [];
+    const entries = xmlText.match(/<entry[\s\S]*?<\/entry>/g) || [];
     console.log("Entries found:", entries.length);
     
     if (entries.length > 0) {
         const entry = entries[0];
         const idMatch = entry.match(/<yt:videoId>(.*?)<\/yt:videoId>/);
-        console.log("First ID Match:", idMatch ? idMatch[1] : "No match");
+        const titleMatch = entry.match(/<title>(.*?)<\/title>/);
+        console.log("First Entry - ID:", idMatch ? idMatch[1] : "No match", "Title:", titleMatch ? titleMatch[1] : "No match");
     }
 
   } catch (error) {

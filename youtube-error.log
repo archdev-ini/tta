@@ -1,0 +1,5 @@
+2026-01-17T07:43:51.225Z - Error: Failed to fetch YouTube feed: 500
+    at getLatestVideos (C:\Users\USER\Desktop\TTA\.next\dev\server\chunks\ssr\[root-of-the-server]__baf674c5._.js:58:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Media (C:\Users\USER\Desktop\TTA\.next\dev\server\chunks\ssr\[root-of-the-server]__baf674c5._.js:254:20)
+2026-01-17T07:49:37.900Z - Failed to fetch YouTube feed: 404
