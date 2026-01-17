@@ -22,6 +22,7 @@ const spaceGrotesk = Space_Grotesk({
 const museoModerno = MuseoModerno({
   variable: "--font-museo-moderno",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

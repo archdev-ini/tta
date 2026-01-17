@@ -2,14 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const pixelMap: Record<string, string> = {
-  A: "A", // I could replace these with SVG fragments for a more "pixelated" look
-  E: "E",
-  H: "H",
-  N: "N",
-  M: "M",
-  T: "T",
-};
+
 
 interface GlitchTextProps {
   text: string;
@@ -17,7 +10,7 @@ interface GlitchTextProps {
   as?: "h1" | "h2" | "h3" | "h4" | "span" | "div";
 }
 
-export default function GlitchText({ text, className = "", as: Component = "span" }: GlitchTextProps) {
+export default function GlitchText({ text, className = "", as: Component = "span", font = "font-heading" }: GlitchTextProps & { font?: string }) {
   const [displayText, setDisplayText] = useState(text);
 
   useEffect(() => {
@@ -41,7 +34,7 @@ export default function GlitchText({ text, className = "", as: Component = "span
   }, [text]);
 
   return (
-    <Component className={`${className} inline-block font-heading`}>
+    <Component className={`${className} inline-block ${font}`}>
       {displayText.split("").map((char, i) => (
         <span key={i} className={/[░▒▓█■□▢▣▤▥▦▧▨▩]/.test(char) ? "text-accent" : ""}>
           {char}

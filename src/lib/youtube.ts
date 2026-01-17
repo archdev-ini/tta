@@ -28,7 +28,12 @@ export async function getLatestVideos(): Promise<Video[]> {
         return MOCK_VIDEOS;
     }
 
-    const res = await fetch(`https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`, { next: { revalidate: 3600 } });
+    const res = await fetch(`https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`, { 
+      next: { revalidate: 0 },
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      }
+    });
     
     if (!res.ok) throw new Error("Failed to fetch YouTube feed");
     
@@ -52,7 +57,7 @@ export async function getLatestVideos(): Promise<Video[]> {
             thumbnail: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
             date: dateMatch ? new Date(dateMatch[1]).toLocaleDateString() : "",
         };
-    }).slice(0, 9); // Limit to latest 9
+    }).slice(0, 50); // Limit to latest 50 (RSS usually returns 15)
 
   } catch (error) {
     console.error("YouTube Fetch Error:", error);

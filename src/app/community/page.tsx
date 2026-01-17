@@ -7,7 +7,11 @@ export default function Community() {
       <section className="max-w-[1600px] w-full px-6 pt-40 pb-20 border-x border-foreground/5">
         <div className="flex flex-col gap-6 max-w-4xl text-left">
            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-accent">Section 05 / Discourse</span>
-           <GlitchText as="h1" text="THE TTA HUB" className="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter text-foreground" />
+           <h1 className="flex flex-wrap gap-x-4 md:gap-x-6 text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter text-foreground">
+             <GlitchText as="span" text="THE" />
+             <GlitchText as="span" text="TTA" font="font-logo" />
+             <GlitchText as="span" text="HUB" />
+           </h1>
         </div>
       </section>
 
