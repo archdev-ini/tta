@@ -3,6 +3,7 @@ services:
     name: tta-cms
     runtime: node
     plan: free
+    rootDir: cms
     buildCommand: npm install && npm run build
     startCommand: npm run start
     healthCheckPath: /admin
