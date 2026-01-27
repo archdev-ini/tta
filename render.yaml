@@ -9,7 +9,7 @@ services:
     healthCheckPath: /admin
     envVars:
       - key: NODE_VERSION
-        value: 20.0.0
+        value: 20.10.0
       - key: NODE_ENV
         value: production
       - key: DATABASE_CLIENT
