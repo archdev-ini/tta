@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground relative overflow-hidden border-t border-dark/5">
       <div className="absolute top-10 left-0 w-full opacity-[0.05] select-none pointer-events-none flex whitespace-nowrap overflow-hidden">
-        <motion.div 
+        <motion.div
           animate={{ x: [0, -1000] }}
           transition={{
             x: {
@@ -37,18 +37,17 @@ export default function Footer() {
             </h2>
             <div className="flex gap-4">
               <SocialIcon icon={<Twitter size={20} />} href="#" />
-              <SocialIcon icon={<Instagram size={20} />} href="#" />
+              <SocialIcon icon={<Instagram size={20} />} href="https://www.instagram.com/_tta.ng/" />
               <SocialIcon icon={<Send size={20} />} href="https://t.me/thethinkingarchitect" />
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-3 md:col-span-2 gap-10">
             <div className="flex flex-col gap-4">
               <h3 className="text-[11px] font-black uppercase tracking-widest text-foreground/50">Navigation</h3>
               <ul className="flex flex-col gap-2">
-                <FooterLink href="/programs">Programs</FooterLink>
-                <FooterLink href="/sessions">Sessions</FooterLink>
                 <FooterLink href="/media">Media</FooterLink>
+                <FooterLink href="/sessions">Sessions</FooterLink>
                 <FooterLink href="/about">About</FooterLink>
                 <FooterLink href="/tickets">Tickets</FooterLink>
               </ul>
@@ -59,6 +58,7 @@ export default function Footer() {
                 <FooterLink href="https://t.me/thethinkingarchitect">Telegram</FooterLink>
                 <FooterLink href="https://luma.com/calendar/cal-zMvRPq81i5pG0LL">Luma</FooterLink>
                 <FooterLink href="https://www.youtube.com/@TheThinkingArchitect-t4p">YouTube</FooterLink>
+                <FooterLink href="https://www.instagram.com/_tta.ng/">Instagram</FooterLink>
               </ul>
             </div>
             <div className="flex flex-col gap-4">
@@ -73,17 +73,17 @@ export default function Footer() {
         </div>
 
         <div className="mt-40 border-t border-foreground/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-           <div className="flex flex-col gap-1 items-center md:items-start text-[10px] font-black uppercase tracking-widest text-foreground/40">
-              <span>Established January 2026</span>
-              <div className="flex items-center gap-2">
-                <Globe size={14} /> Global Foundation
-              </div>
-           </div>
-           <div className="text-center md:text-right">
-              <p className="text-[10px] font-black uppercase tracking-widest text-foreground/60">
-                © 2026 The Thinking Architect. All rights reserved.
-              </p>
-           </div>
+          <div className="flex flex-col gap-1 items-center md:items-start text-[10px] font-black uppercase tracking-widest text-foreground/40">
+            <span>Established January 2026</span>
+            <div className="flex items-center gap-2">
+              <Globe size={14} /> Global Foundation
+            </div>
+          </div>
+          <div className="text-center md:text-right">
+            <p className="text-[10px] font-black uppercase tracking-widest text-foreground/60">
+              © 2026 The Thinking Architect. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

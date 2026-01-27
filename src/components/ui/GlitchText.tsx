@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-
-
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface GlitchTextProps {
   text: string;
@@ -10,36 +9,68 @@ interface GlitchTextProps {
   as?: "h1" | "h2" | "h3" | "h4" | "span" | "div";
 }
 
-export default function GlitchText({ text, className = "", as: Component = "span", font = "font-heading" }: GlitchTextProps & { font?: string }) {
-  const [displayText, setDisplayText] = useState(text);
+export default function GlitchText({ text, className = "", as: Component = "span" }: GlitchTextProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  useEffect(() => {
-    const chars = text.split("");
-    const glitchInterval = setInterval(() => {
-      const glitched = chars.map((char) => {
-        if (Math.random() > 0.95) {
-          // Occasional random pixel-like char or symbol
-          const symbols = ["░", "▒", "▓", "█", "■", "□", "▢", "▣", "▤", "▥", "▦", "▧", "▨", "▩"];
-          return symbols[Math.floor(Math.random() * symbols.length)];
-        }
-        return char;
-      });
-      setDisplayText(glitched.join(""));
-      
-      // Reset back to original text quickly
-      setTimeout(() => setDisplayText(text), 50);
-    }, 2000 + Math.random() * 3000);
+  const words = text.split(" ");
+  let charIndex = 0;
 
-    return () => clearInterval(glitchInterval);
-  }, [text]);
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.03 }, // Keep simple stagger if possible, or use manual delay below
+    },
+  };
+
+  const child = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.03,
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+      },
+    }),
+  };
 
   return (
-    <Component className={`${className} inline-block ${font}`}>
-      {displayText.split("").map((char, i) => (
-        <span key={i} className={/[░▒▓█■□▢▣▤▥▦▧▨▩]/.test(char) ? "text-accent" : ""}>
-          {char}
-        </span>
-      ))}
+    <Component ref={ref} className={`${className} inline-block`}>
+      <motion.div
+        className="flex flex-wrap gap-x-[0.25em] justify-center"
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        {words.map((word, i) => (
+          <span key={i} className="whitespace-nowrap inline-block">
+            {Array.from(word).map((letter, j) => {
+              const index = charIndex++;
+              return (
+                <motion.span
+                  variants={child}
+                  custom={index}
+                  key={j}
+                  className="inline-block"
+                >
+                  {letter}
+                </motion.span>
+              );
+            })}
+          </span>
+        ))}
+      </motion.div>
     </Component>
   );
 }

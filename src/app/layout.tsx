@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, MuseoModerno } from "next/font/google";
+import { getCommunityHighlights } from "@/lib/community-data";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animation/SmoothScroll";
@@ -56,11 +57,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const highlights = await getCommunityHighlights();
+
   return (
     <html lang="en">
       <Script src="https://tally.so/widgets/embed.js" strategy="lazyOnload" />
@@ -70,7 +73,7 @@ export default function RootLayout({
         <SmoothScroll>
           <Preloader />
           <CommandPalette />
-          <Header />
+          <Header highlights={highlights} />
           <main className="min-h-screen pt-20 overflow-hidden">
             <PageTransition>
               {children}
