@@ -17,9 +17,11 @@ import CommunityMarquee from "@/components/community/CommunityMarquee";
 
 interface Props {
   highlights?: CommunityHighlight[];
+  settings?: any;
 }
 
-export default function Header({ highlights = [] }: Props) {
+export default function Header({ highlights = [], settings }: Props) {
+  const showMarquee = settings?.showHeaderMarquee ?? true;
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
@@ -44,7 +46,7 @@ export default function Header({ highlights = [] }: Props) {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-0 w-full z-50 transition-smooth flex flex-col"
       >
-        <CommunityMarquee highlights={highlights} />
+        {showMarquee && <CommunityMarquee highlights={highlights} />}
 
         <div className="glass w-full border-b border-white/5">
           <div className="max-w-[1600px] mx-auto px-6 h-20 flex justify-between items-center">

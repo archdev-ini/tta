@@ -1,22 +1,23 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { useRef } from "react";
 
 interface GlitchTextProps {
   text: string;
   className?: string;
   as?: "h1" | "h2" | "h3" | "h4" | "span" | "div";
+  font?: string;
 }
 
-export default function GlitchText({ text, className = "", as: Component = "span" }: GlitchTextProps) {
+export default function GlitchText({ text, className = "", as: Component = "span", font = "" }: GlitchTextProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const words = text.split(" ");
   let charIndex = 0;
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -24,7 +25,7 @@ export default function GlitchText({ text, className = "", as: Component = "span
     },
   };
 
-  const child = {
+  const child: Variants = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -47,7 +48,7 @@ export default function GlitchText({ text, className = "", as: Component = "span
   };
 
   return (
-    <Component ref={ref} className={`${className} inline-block`}>
+    <Component ref={ref} className={`${className} ${font} inline-block`}>
       <motion.div
         className="flex flex-wrap gap-x-[0.25em] justify-center"
         initial="hidden"

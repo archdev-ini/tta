@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, MuseoModerno } from "next/font/google";
 import { getCommunityHighlights } from "@/lib/community-data";
+import { getGlobalSettings } from "@/lib/mdx";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animation/SmoothScroll";
 import PageTransition from "@/components/animation/PageTransition";
 import CommandPalette from "@/components/ui/CommandPalette";
 import Preloader from "@/components/ui/Preloader";
+import NoiseBackground from "@/components/visuals/NoiseBackground";
 import Script from "next/script";
 import "./globals.css";
 
@@ -26,36 +28,46 @@ const museoModerno = MuseoModerno({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "The Thinking Architect | TTA",
-  description: "An authority signal and gateway to TTA platforms. Calm, Intentional, Durable.",
-  keywords: ["Architecture", "Education", "TTA", "Design", "Theory", "Professional Practice"],
-  openGraph: {
-    title: "The Thinking Architect | TTA",
-    description: "An authority signal and gateway to TTA platforms. Calm, Intentional, Durable.",
-    url: "https://tta.foundation",
-    siteName: "The Thinking Architect",
-    images: [
-      {
-        url: "https://tta.foundation/og.png", // User should replace this
-        width: 1200,
-        height: 630,
-        alt: "The Thinking Architect",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "The Thinking Architect | TTA",
-    description: "An authority signal and gateway to TTA platforms. Calm, Intentional, Durable.",
-    creator: "@TheThinkingArch",
-  },
-  icons: {
-    icon: "/icon.svg",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getGlobalSettings();
+
+  const siteName = settings?.siteName || "The Thinking Architect";
+  const title = settings?.defaultSeoTitle || "The Thinking Architect | TTA";
+  const description = settings?.defaultSeoDescription || "An authority signal and gateway to TTA platforms. Calm, Intentional, Durable.";
+  const ogImage = settings?.defaultSeoImage || "https://tta.foundation/og.png";
+
+  return {
+    title,
+    description,
+    keywords: ["Architecture", "Education", "TTA", "Design", "Theory", "Professional Practice"],
+    openGraph: {
+      title,
+      description,
+      url: "https://tta.foundation",
+      siteName,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: siteName,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+      creator: "@TheThinkingArch",
+    },
+    icons: {
+      icon: "/icon.svg",
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -63,6 +75,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const highlights = await getCommunityHighlights();
+  const settings = await getGlobalSettings();
 
   return (
     <html lang="en">
@@ -71,15 +84,16 @@ export default async function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable} ${museoModerno.variable} antialiased`}
       >
         <SmoothScroll>
+          <NoiseBackground />
           <Preloader />
           <CommandPalette />
-          <Header highlights={highlights} />
+          <Header highlights={highlights} settings={settings} />
           <main className="min-h-screen pt-20 overflow-hidden">
             <PageTransition>
               {children}
             </PageTransition>
           </main>
-          <Footer />
+          <Footer settings={settings} />
         </SmoothScroll>
       </body>
     </html>

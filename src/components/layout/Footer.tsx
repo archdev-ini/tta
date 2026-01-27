@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Send, Globe, Instagram, Twitter } from "lucide-react";
 
-export default function Footer() {
+export default function Footer({ settings }: { settings?: any }) {
+  const siteName = settings?.siteName || "THE THINKING ARCHITECT";
+  const footerMarqueeText = settings?.footerMarqueeText || settings?.siteName || "TTA";
   return (
     <footer className="bg-background text-foreground relative overflow-hidden border-t border-dark/5">
       <div className="absolute top-10 left-0 w-full opacity-[0.05] select-none pointer-events-none flex whitespace-nowrap overflow-hidden">
@@ -22,7 +24,7 @@ export default function Footer() {
         >
           {Array.from({ length: 10 }).map((_, i) => (
             <span key={i} className="text-[20rem] font-black uppercase tracking-tighter mx-20 flex items-center gap-20 font-logo">
-              TTA
+              {footerMarqueeText}
               <div className="w-12 h-12 rounded-full bg-foreground/10" />
             </span>
           ))}
@@ -33,7 +35,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
           <div className="md:col-span-2">
             <h2 className="text-6xl font-black tracking-tighter mb-8 leading-none">
-              THE <br /> THINKING <br /> ARCHITECT
+              {siteName.split(' ').map((word: string, i: number) => (
+                <span key={i}>{word} <br /></span>
+              ))}
             </h2>
             <div className="flex gap-4">
               <SocialIcon icon={<Twitter size={20} />} href="#" />
@@ -81,7 +85,7 @@ export default function Footer() {
           </div>
           <div className="text-center md:text-right">
             <p className="text-[10px] font-black uppercase tracking-widest text-foreground/60">
-              © 2026 The Thinking Architect. All rights reserved.
+              © {new Date().getFullYear()} {siteName}. All rights reserved.
             </p>
           </div>
         </div>
